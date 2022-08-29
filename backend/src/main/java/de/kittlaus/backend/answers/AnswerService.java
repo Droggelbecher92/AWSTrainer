@@ -29,6 +29,7 @@ public class AnswerService {
         for (int i = 0; i < questions.size(); i++) {
             checkedAnswers.add(validateAnswer(given.get(i), questions.get(i)));
         }
+
         ValidatedAnswer validatedAnswer = ValidatedAnswer.builder().validatedAnswers(checkedAnswers).userId(userId).isExam(isExam).build();
         return new AnswersValidatedDTO(answerRepo.save(validatedAnswer).getId());
     }
