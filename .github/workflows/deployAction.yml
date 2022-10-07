@@ -57,10 +57,14 @@ jobs:
         with:
           name: AWSTrainer.jar
           path: backend/target
-      - name: Copy to Bucket
-        run: |
-          version=1.0-`date +"%Y%m%d-%H%M"`
-          aws s3 cp backend/target/AWSTrainer.jar s3://elasticbeanstalk-eu-central-1-587650972708/AWSTrainer-${version}.jar
+      - name: Upload to S3
+      uses: shallwefootball/s3-upload-action@master
+      id: S3
+      with:
+        aws_key_id: ${{secrets.AWS_KEY_ID}}
+        aws_secret_access_key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        aws_bucket: elasticbeanstalk-eu-central-1-587650972708
+        source_dir: backend/target/AWSTrainer.jar
       - name: Create new Version
         run: |
           version=1.0-`date +"%Y%m%d-%H%M"`
