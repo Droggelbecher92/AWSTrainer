@@ -64,7 +64,7 @@ jobs:
           aws_key_id: ${{secrets.ACCESS_KEY_ID}}
           aws_secret_access_key: ${{secrets.SECRET_ACCESS_KEY}}
           aws_bucket: elasticbeanstalk-eu-central-1-587650972708
-          source_file: /home/runner/work/AWSTrainer/AWSTrainer/backend/target/AWSTrainer.jar
+          source_dir: /home/runner/work/AWSTrainer/AWSTrainer/backend/target
       - name: Create new Version
         run: |
           version=1.0-`date +"%Y%m%d-%H%M"`
