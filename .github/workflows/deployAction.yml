@@ -1,9 +1,9 @@
 name: Deploy to heroku
 
 on:
-  push:
-    branches:
-      - main , deploy
+  push: []
+   # branches:
+    #  - main
 
 jobs:
   build-frontend:

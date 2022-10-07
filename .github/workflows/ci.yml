@@ -1,7 +1,9 @@
 name: Tests
 
 on:
-  push: []
+  push: #[]
+    branches:
+      - kdjhsfhkjfsh
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
