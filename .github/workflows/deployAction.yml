@@ -1,0 +1,75 @@
+name: Deploy to heroku
+
+on:
+  push:
+    branches:
+      - main , deploy
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: frontend-build
+          path: frontend/build/
+
+  build-backend:
+    runs-on: ubuntu-latest
+    needs: build-frontend
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 18
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - uses: actions/download-artifact@v2
+        with:
+          name: frontend-build
+          path: backend/src/main/resources/static
+      - name: Build with Maven
+        run: mvn -B package --file backend/pom.xml
+      - uses: actions/upload-artifact@v2
+        with:
+          name: AWSTrainer.jar                 #.jar must be the same as 'finalName' in pom.xml
+          path: backend/target/AWSTrainer.jar  #.jar must be the same as 'finalName' in pom.xml
+
+  deploy-aws:
+    runs-on: ubuntu-latest
+    needs: build-backend
+    env:
+      aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+      aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+      aws-region: "eu-central-1"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: AWSTrainer.jar
+          path: backend/target
+      - name: Copy to Bucket
+        run: |
+          export version=1.0-`date +"%Y%m%d-%H%M%S"`
+          aws s3 cp .backend/target/AWSTrainer.jar s3://elasticbeanstalk-eu-central-1-587650972708/AWSTrainer-${version}.jar
+      - name: Create new Version
+        run: |
+          aws elasticbeanstalk create-application-version \
+            --application-name AWSTrainer \
+            --version-label ${version} \
+            --source-bundle S3Bucket="elasticbeanstalk-eu-central-1-587650972708",S3Key="AWSTrainer-${version}.jar"
+      - name: Deploy the Version in Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk update-environment \
+            --application-name AWSTrainer \
+            --environment-name Awstrainer-env-1 \
+            --version-label ${version}
