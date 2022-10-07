@@ -59,16 +59,18 @@ jobs:
           path: backend/target
       - name: Copy to Bucket
         run: |
-          export version=1.0-`date +"%Y%m%d-%H%M%S"`
+          version=1.0-`date +"%Y%m%d-%H%M"`
           aws s3 cp backend/target/AWSTrainer.jar s3://elasticbeanstalk-eu-central-1-587650972708/AWSTrainer-${version}.jar
       - name: Create new Version
         run: |
+          version=1.0-`date +"%Y%m%d-%H%M"`
           aws elasticbeanstalk create-application-version \
             --application-name AWSTrainer \
             --version-label ${version} \
             --source-bundle S3Bucket="elasticbeanstalk-eu-central-1-587650972708",S3Key="AWSTrainer-${version}.jar"
       - name: Deploy the Version in Elastic Beanstalk
         run: |
+          version=1.0-`date +"%Y%m%d-%H%M"`
           aws elasticbeanstalk update-environment \
             --application-name AWSTrainer \
             --environment-name Awstrainer-env-1 \
