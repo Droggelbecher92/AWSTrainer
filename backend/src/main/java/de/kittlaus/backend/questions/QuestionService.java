@@ -34,6 +34,10 @@ public class QuestionService {
         return (List<Question>) questionRepo.findAllById(questionsId);
     }
 
+    public Question findById(String questionId){
+        return questionRepo.findById(questionId).orElseThrow();
+    }
+
     public List<Question> generateExam(CertType certType) {
         List<Question> exam = new ArrayList<>();
         exam.addAll(questionRepo.findRandomQuestionsInCategoryInExam(17,Category.CLOUD,certType));
