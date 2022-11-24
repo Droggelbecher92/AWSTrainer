@@ -52,9 +52,8 @@ public class AnswerService {
 
     public List<AnswersDTO> findAllByUsername(String username, boolean isExam){
         String userId = userService.findByUsername(username).orElseThrow().getId();
-        List<ValidatedAnswer> allByUserId = answerRepo.findAllByUserIdAndExam(userId,isExam);
-        List<AnswersDTO> answersDTOS = allByUserId.stream().map(answer -> mapper(answer,isExam)).toList();
-        return answersDTOS;
+        List<ValidatedAnswer> allByUserId = answerRepo.findAllByUserIdAndIsExam(userId,isExam);
+        return allByUserId.stream().map(answer -> mapper(answer,isExam)).toList();
     }
 
 
