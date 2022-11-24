@@ -16,7 +16,7 @@ export default function LoginPage() {
             <NavBar location={'login'}/>
             <LoginRegisterForm isRegister={registerForm} toggle={toggle}/>
             <button className={"nes-btn is-success"} onClick={toggle}>
-                {registerForm?"Zum Login":"Zur Registrierung"}
+                {registerForm?"To Login":"To registration"}
             </button>
         </div>
     );
