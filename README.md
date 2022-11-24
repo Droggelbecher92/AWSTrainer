@@ -1,6 +1,6 @@
-# AWS Trainer *WIP*
+# Cloud Trainer *WIP*
 
-Test your knowledge about AWS services. with questions like in the actual exam. You can take complete practice-exams or
+Test your knowledge about Cloud services. with questions like in the actual exam. You can take complete practice-exams or
 short test. 
 
 ## Current Training Exams:
