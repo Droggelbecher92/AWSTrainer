@@ -13,7 +13,7 @@ export default function ChooseButton({color,text,destination}:ChooseButtonProps)
     const auth = useAuth()
 
     return(
-        auth.username!=="Droggelbecher92"&&destination=="/add"
+        auth.username!=="Droggelbecher92"&&destination==="/add"
             ?
             <div></div>
             :
