@@ -5,6 +5,7 @@ import de.kittlaus.backend.models.answers.AnswersValidatedDTO;
 import de.kittlaus.backend.models.answers.GivenAnswer;
 import de.kittlaus.backend.models.answers.ValidatedAnswer;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,16 @@ public class AnswerController {
     @GetMapping("/{id}")
     public ResponseEntity<AnswersDTO> getAnswerById(@PathVariable String id){
         return ResponseEntity.of(answerService.findById(id));
+    }
+
+    @GetMapping("/user/exam/{username}")
+    public List<AnswersDTO> getAllExamAnswersByUser(@PathVariable String username){
+        return answerService.findAllByUsername(username, true);
+    }
+
+    @GetMapping("/user/train/{username}")
+    public  List<AnswersDTO> getAllTrainAnswersByUser(@PathVariable String username){
+        return answerService.findAllByUsername(username, false);
     }
 
 

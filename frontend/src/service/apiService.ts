@@ -62,6 +62,16 @@ export const getResultsById = (id:string,token:string)=>{
         .then((response : AxiosResponse<ValidatedAnswers>) => response.data)
 }
 
+export const getAnswersFromExam = (username:string,token:string)=>{
+    return axios.get(`/api/answer/user/exam/${username}`,headers(token))
+        .then((response : AxiosResponse<ValidatedAnswers[]>) => response.data)
+}
+
+export const getAnswersFromTrain = (username:string,token:string)=>{
+    return axios.get(`/api/answer/user/train/${username}`,headers(token))
+        .then((response : AxiosResponse<ValidatedAnswers[]>) => response.data)
+}
+
 //Hilfsmethoden
 const headers = (token :string) => ({
     headers: {

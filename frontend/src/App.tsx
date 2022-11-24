@@ -9,6 +9,7 @@ import QuickTrainPage from "./pages/QuickTrainPage";
 import ResultsPage from "./pages/ResultsPage";
 import CategoryTrainPage from "./pages/CategoryTrainPage";
 import ExamPage from "./pages/ExamPage";
+import UserPage from "./pages/UserPage";
 
 export default function App() {
     return (
@@ -17,7 +18,7 @@ export default function App() {
                 <Routes>
                     <Route path={'/'} element={<HomePage/>}/>
                     <Route path={'/login'} element={<LoginPage/>}/>
-                    <Route path={'/user'} element={<LoginPage/>}/>
+                    <Route path={'/user'} element={<UserPage/>}/>
                     <Route path={'/add'} element={<CreateQuestion/>}/>
                     <Route path={'/quickTrain'} element={<QuickTrainPage/>}/>
                     <Route path={'/result/:id'} element={<ResultsPage/>}/>

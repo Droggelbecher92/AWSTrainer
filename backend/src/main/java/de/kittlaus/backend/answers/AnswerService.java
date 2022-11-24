@@ -50,6 +50,30 @@ public class AnswerService {
                 .build());
     }
 
+    public List<AnswersDTO> findAllByUsername(String username, boolean isExam){
+        String userId = userService.findByUsername(username).orElseThrow().getId();
+        List<ValidatedAnswer> allByUserId = answerRepo.findAllByUserIdAndIsExam(userId,isExam);
+        return allByUserId.stream().map(answer -> mapper(answer,isExam)).toList();
+    }
+
+
+
+
+    private AnswersDTO mapper(ValidatedAnswer answer, boolean exam){
+        AnswersDTO dto = new AnswersDTO();
+        dto.setExam(exam);
+        List<AnsweredQuestion> questions = new ArrayList<>();
+        for (CheckedAnswer checkedAnswer : answer.getValidatedAnswers()){
+            Question question = questionService.findById(checkedAnswer.getQuestionId());
+            questions.add(AnsweredQuestion.builder().question(question)
+                    .givenAnswers(checkedAnswer.getGivenAnswers())
+                    .correctlyAnswers(checkedAnswer.getCorrectlyAnswers())
+                    .build());
+        }
+        dto.setTakenQuestions(questions);
+        return dto;
+    }
+
     private List<AnsweredQuestion> makeAnsweredQuestions(ValidatedAnswer answers, List<Question> questions) {
         List<AnsweredQuestion> combined = new ArrayList<>();
         for (int i = 0; i < questions.size(); i++) {
@@ -85,5 +109,6 @@ public class AnswerService {
         }
         return questions;
     }
+
 
 }
