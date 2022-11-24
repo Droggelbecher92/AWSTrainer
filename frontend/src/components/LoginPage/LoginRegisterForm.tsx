@@ -24,12 +24,12 @@ export default function LoginRegisterForm({isRegister,toggle}:LoginRegisterFormP
         event.preventDefault()
         setError('')
         if (!(password===passwordTwo) || password.length<5){
-            setError("Passwörter nicht identisch oder zu kurz")
+            setError("Passwords not identical or too short")
         } else {
             registerUser(username,password,passwordTwo)
                 .catch(e => {
                     if (e.response.status===400){
-                        setError("Name schon vergeben")
+                        setError("Name already taken")
                     } else {
                         setError(e.message)
                     }
@@ -56,23 +56,23 @@ export default function LoginRegisterForm({isRegister,toggle}:LoginRegisterFormP
             <h2 className={"nes-text is-primary"}>{isRegister?"Register":"Login"}</h2>
             <form onSubmit={isRegister?createUser:login}>
                 <LoginInput
-                    placeholder={'Nutzername'}
+                    placeholder={'Username'}
                     value={username}
                     onChange={setUsername}
                 />
                 <LoginInput
                     isPassword
-                    placeholder={'Passwort'}
+                    placeholder={'Password'}
                     value={password}
                     onChange={setPassword}
                 />
                     {isRegister && <LoginInput
                         isPassword
-                        placeholder={'Wiederholen'}
+                        placeholder={'Password again'}
                         value={passwordTwo}
                         onChange={setPasswordTwo}
                     />}
-                    <SubmitButton text={isRegister?"Registrieren":"Login"}/>
+                    <SubmitButton text={isRegister?"Register":"Login"}/>
             </form>
             {error && <h1 className={"nes-text is-error"}>{error}</h1>}
         </div>

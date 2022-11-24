@@ -2,7 +2,7 @@
 export const buttons = [
     {
         color : "primary",
-        text : "Übungs Prüfung",
+        text : "Practice Exam",
         destination : "/exam"
     },
     {
@@ -32,7 +32,7 @@ export const buttons = [
     },
     {
         color : "error",
-        text : "Neue Fragen",
+        text : "New Questions",
         destination : "/add"
     }
 ]
