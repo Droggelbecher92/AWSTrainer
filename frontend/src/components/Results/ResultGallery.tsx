@@ -86,7 +86,7 @@ export default function ResultGallery({id}:ResultGalleryProps){
                                     return e
                                 })
                                 .map((e,i) => {
-                                return <ResultCard key={e.question.question} result={e} index={i}/>
+                                return <ResultCard key={e.question.question+i} result={e} index={i}/>
                             })
                         }
                         {
